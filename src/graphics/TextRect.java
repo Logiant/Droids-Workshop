@@ -1,3 +1,7 @@
+/**
+ * this class is used to simplify the process of drawing objects by holding texture coordinates
+ * @author Logan Beaver
+ */
 package graphics;
 
 import org.newdawn.slick.geom.Vector2f;

@@ -1,3 +1,8 @@
+/**
+ * This routine tells the droid to MoveTo a specific location
+ * It currently moves in a straight line to that point
+ * @author Logan Beaver
+ */
 package routines;
 
 import org.newdawn.slick.geom.Vector2f;
@@ -7,6 +12,7 @@ import main.World;
 
 public class MoveTo extends Routine {
 
+	//the destination variables
     final protected int destX;
     final protected int destY;
 
@@ -16,14 +22,18 @@ public class MoveTo extends Routine {
         this.destY = destY;
     }
 
-    @Override
-    public void restart() {
+    public MoveTo(float x, float y) {
+    	this((int) x, (int) y);
+    }
+
+	@Override
+    public void reset() {
         start();
     }
 
     @Override
     public void act(Droid droid, World board) {
-        if (isRunning()) {
+        if (this.isRunning()) {
             if (!droid.isAlive()) {
                 fail();
                 return;
@@ -36,7 +46,7 @@ public class MoveTo extends Routine {
 
     private void moveDroid(Droid droid) {
     	Vector2f position = droid.getPosition();
-    	Vector2f movement = new Vector2f(0, 0);
+    	Vector2f movement = new Vector2f(0, 0); //the direction to move
         if (destY != position.y) {
             if (destY > position.y) {
                 movement.y ++;
@@ -51,6 +61,7 @@ public class MoveTo extends Routine {
                 movement.x --;
             }
         }
+        //command the droid to move
         droid.move(movement);
         if (isDroidAtDestination(droid)) {
             succeed();
@@ -59,5 +70,10 @@ public class MoveTo extends Routine {
 
     private boolean isDroidAtDestination(Droid droid) {
         return destX == droid.getPosition().x && destY == droid.getPosition().y;
+    }
+    
+    @Override
+    public String toString() {
+    	return "Move To";
     }
 }

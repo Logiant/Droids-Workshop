@@ -1,3 +1,9 @@
+/**
+ * This class makes drawing objects easier by handling the coordinates of the drawn rectangle
+ * It uses ints to reduce jittering
+ * @author Logan Beaver
+ */
+
 package graphics;
 
 import org.newdawn.slick.geom.Vector2f;

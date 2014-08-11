@@ -1,3 +1,7 @@
+/**
+ * this class handles all drawing and direct OpenGL calls
+ * @author Logan Beaver
+ */
 package graphics;
 
 import java.io.IOException;
@@ -11,8 +15,9 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Graphics {
 
+	//list of all textures loaded
 	List<Texture> textures;
-	int currentId = -1;
+	//list of all loaded texture paths
 	List<String> paths;
 
 	public Graphics() {
@@ -22,7 +27,7 @@ public class Graphics {
 
 	public int loadImage(String path) {
 		int id = -1;
-		if (paths.contains(path)) {
+		if (paths.contains(path)) { //don't load redundant textures
 			id = paths.indexOf(path);
 		} else {
 			try {
@@ -38,21 +43,23 @@ public class Graphics {
 		return id;
 	}
 
+	//draw the rectange defined by 'r' with the texture coordinates 't' on texture 'id'
 	public void draw(GRect r, TextRect t, int id) {
 		if (id >= 0 && id < textures.size()) {
 			textures.get(id).bind();
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(t.xMin, t.yMax);
-			GL11.glVertex2f(r.xMin, r.yMin);
-			
-			GL11.glTexCoord2f(t.xMin, t.yMin);
 			GL11.glVertex2f(r.xMin, r.yMax);
 			
-			GL11.glTexCoord2f(t.xMax, t.yMin);
+			GL11.glTexCoord2f(t.xMax, t.yMax);
 			GL11.glVertex2f(r.xMax, r.yMax);
 			
-			GL11.glTexCoord2f(t.xMax, t.yMax);
+			GL11.glTexCoord2f(t.xMax, t.yMin);
 			GL11.glVertex2f(r.xMax, r.yMin);
+			
+			GL11.glTexCoord2f(t.xMin, t.yMin);
+			GL11.glVertex2f(r.xMin, r.yMin);
+
 			GL11.glEnd();
 		}
 	}
